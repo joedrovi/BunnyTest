@@ -2,11 +2,14 @@ const Task = require('../models').userTask;
 
 module.exports = {
   create(req, res) {
+    if( typeof req.body.active !=='boolean'){req.body.active=true}
     return Task
       .create({
         description: req.body.description,
         state : req.body.state,
         user_id: req.body.user_id,
+        active: req.body.active,
+        
       })
       .then(task => res.status(201).send(task))
       .catch(error => res.status(400).send(error));
@@ -33,7 +36,6 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
 
-
   update(req, res) {
     return Task
       .update({        
@@ -46,12 +48,8 @@ module.exports = {
        }
         })
       .then(changes => {
-        if (!changes[0]) {
-          return res.status(404).send({
-            message: 'Task Not Found',
-          });
-        }
-        res.status(200).send("Task Updated")
+        
+        res.status(200).send({message: 'Task Updated'})
       })
       .catch((error) => res.status(400).send(error));
   },
@@ -59,28 +57,43 @@ module.exports = {
 
   delete(req, res) {
     return Task
-      .update({}, {
+      .update({        
+        active: false,
+      }, {
         where: {
           id: req.params.taskId
        }
         })
-      .then(changes => {
-        if (!changes[0]) {
-          return res.status(404).send({
-            message: 'Task Not Found',
-          });
-        }
-        res.status(200).send("Task deleted")
+      .then(changes => {        
+        res.status(200).send({message: 'Task deleted'})
       })
       .catch((error) => res.status(400).send(error));
   },
-  getTaskForUser(req, res) {
+
+  getTasksFromUser(req, res) {
     return Task
     .findAll({where:{user_id:req.params.userId}})
     .then(tasks => {
       if (!tasks) {
         return res.status(404).send({
           message: 'Task Not Found',
+        });
+      }
+      return res.status(200).send(tasks);
+    })
+    .catch(error => res.status(400).send(error));
+  },
+
+  
+  deleteTasksFromUser(req, res) {
+    return Task.update({        
+      active : false,
+    },
+    {where:{user_id:req.params.userId}}
+    ).then(tasks => {
+      if (!tasks) {
+        return res.status(404).send({
+          message: 'No tasks were Found',
         });
       }
       return res.status(200).send(tasks);
