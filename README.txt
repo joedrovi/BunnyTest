@@ -1,42 +1,24 @@
-Bunny Studio Technical Test
+# Bunny Studio Interview Test
 
-Plase use the following link to access the platform: 
-https://joedrovi.github.io/BunnyViews/users
+Test for Junior Front-End Applicaction at Bunny Studio
 
+## How to Run
+Front-end was generated with Angular CLI version 8.3.20.
+Backend was generated with Node version 12.13.1 for the two APIs
 
-Platform Components:
+### Development server
 
-BunnyTestVista:
-An angular ap, contains the views and the controllers, exchange information with the UserAPI and the TaskAPI
+#### User API
 
-Installation:
-npm install
+Inside UserAPI folder run `npm install` and then `npm start:dev`
 
-Run with:
-ng serve:dev
+#### Task API
 
+Inside UserAPI folder run `npm install` and then `npm start:dev`
 
-UserAPI:
-A node application in charge of user information, has an integration to a SQLite DB
+#### Angular Front-end
 
-Installation:
-npm install
+Inside BunnyTestVista folder run `npm install` then `ng build` and then `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-Run with:
-npm start:dev
-
-
-TaskAPI: 
-A Node application in charge of tasks information, has an integration to a SQLite DB
-
-Installation:
-npm install
-
-Run with:
-npm start:dev
-
-
-
-
-
-
+### Live Demo
+You can find the live demo on [HERE](https://joedrovi.github.io/BunnyViews/users)
